@@ -29,14 +29,10 @@ class Controller(FloatLayout):
 
     step_grid = GridLayout(rows=3, cols=3, size_hint=(
         None, None), pos_hint={'x': .04, 'y': .11})
-    step_grid.add_widget(Widget())
-    step_grid.add_widget(btn_w)
-    step_grid.add_widget(Widget())
-    step_grid.add_widget(btn_a)
-    step_grid.add_widget(Widget())
-    step_grid.add_widget(btn_d)
-    step_grid.add_widget(Widget())
-    step_grid.add_widget(btn_s)
+
+    for elem in (btn_w, btn_a, btn_d, btn_s):
+        step_grid.add_widget(Widget())
+        step_grid.add_widget(elem)
     step_grid.add_widget(Widget())
 
     btn_left = Button(text='left', size_hint=(
