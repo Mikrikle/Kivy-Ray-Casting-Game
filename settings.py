@@ -5,6 +5,10 @@ from kivy.core.window import Window
 WIDTH = 1200
 HEIGHT = 800
 
+REAL_SCREEN_X = 1920
+REAL_SCREEN_Y = 1080
+
+
 #Window.size = [WIDTH, HEIGHT]
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
@@ -12,8 +16,8 @@ FPS = 60
 TILE = 100
 FPS_POS = (WIDTH - 65, 5)
 
-NULLX = 360
-NULLY = 140
+NULLX =  (REAL_SCREEN_X-WIDTH)//2 
+NULLY = (REAL_SCREEN_Y-HEIGHT)//2 
 
 # minimap settings
 MAP_SCALE = 7

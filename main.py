@@ -12,19 +12,18 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.config import Config
-Config.set('graphics', 'width', '1920')
-Config.set('graphics', 'height', '1080')
+from settings import NULLX, NULLY, REAL_SCREEN_Y, REAL_SCREEN_X
 Window.fullscreen = 'auto'
 
 
 class Controller(FloatLayout):
     
-    btn_w = Button(text='w', size_hint=(None, None), size=(50,50),  pos_hint={'x':.2, 'y':1} )
-    btn_s = Button(text='s', size_hint=(None, None), size=(50,50),  pos_hint={'x':.2, 'y':0} )
-    btn_a = Button(text='a', size_hint=(None, None), size=(50,50),  pos_hint={'x':.14, 'y':.5} )
-    btn_d = Button(text='d', size_hint=(None, None), size=(50,50),  pos_hint={'x':.26, 'y':.5} )
+    btn_w = Button(text='w', size_hint=(None, None), size=(70,70),  pos_hint={'x':.2, 'y':1} )
+    btn_s = Button(text='s', size_hint=(None, None), size=(70,70),  pos_hint={'x':.2, 'y':0} )
+    btn_a = Button(text='a', size_hint=(None, None), size=(70,70),  pos_hint={'x':.14, 'y':.5} )
+    btn_d = Button(text='d', size_hint=(None, None), size=(70,70),  pos_hint={'x':.26, 'y':.5} )
     
-    step_grid = GridLayout(rows=3, cols=3, size_hint=(None, None), pos_hint={'x':.1, 'y':.05} )
+    step_grid = GridLayout(rows=3, cols=3, size_hint=(None, None), pos_hint={'x':.04, 'y':.11} )
     step_grid.add_widget(Widget())
     step_grid.add_widget(btn_w)
     step_grid.add_widget(Widget())
@@ -35,10 +34,14 @@ class Controller(FloatLayout):
     step_grid.add_widget(btn_s)
     step_grid.add_widget(Widget())
     
+    def fps(self, dt):
+        fps = int(1/dt)
+        self.fpslbl.text = str(fps)
+        
+    fpslbl = Label(text='0', pos_hint={'x':.4, 'y':.4},font_size=50)
     
-    
-    btn_left = Button(text='left', size_hint=(None, .1), pos_hint={'x':.7, 'y':.02} )
-    btn_right = Button(text='right', size_hint=(None, .1), pos_hint={'x':.85, 'y':.02} )
+    btn_left = Button(text='left', size_hint=(None, .1), pos_hint={'x':.82, 'y':.02} )
+    btn_right = Button(text='right', size_hint=(None, .1), pos_hint={'x':.92, 'y':.02} )
     
     btns = (btn_w, btn_s, btn_a, btn_d, btn_left, btn_right)
     
@@ -48,16 +51,13 @@ class Controller(FloatLayout):
         self.size_hint=(1,1)
 
         self.add_widget(self.step_grid)
-        
+        self.add_widget(self.fpslbl)
         for widget in (self.btn_left, self.btn_right):
             self.add_widget(widget)
 
         
 
 class GameField(BoxLayout):
-    def fps(self, dt):
-        fps = int(1/dt)
-        self.FPSlbl.text = str(fps)
     
     def __init__(self,cc, **kwargs):
         super().__init__(**kwargs)
@@ -65,19 +65,25 @@ class GameField(BoxLayout):
         self.size_hint = (.8, .8)
         self.orientation = 'vertical'
         self.GAME = Widget()
-        self.FPSlbl = Label(text='0', size_hint=(None, None), pos_hint={'x':.9, 'y':.5} )
-        self.add_widget(self.FPSlbl)
         self.event = Clock.schedule_interval(self.mainloop, 0)
         self.GAME.canvas = Canvas()
         self.player = Player()
         self.drawing = Drawing(self.GAME.canvas, None)
         self.add_widget(self.GAME)
-
+        with self.canvas.after:
+            Color(.05,.05,.05)
+            Rectangle(pos=(0,0), size=(NULLX,REAL_SCREEN_Y))
+            Color(.05,.01,.15)
+            Rectangle(pos=(NULLX,REAL_SCREEN_Y-NULLY), size=(REAL_SCREEN_X-NULLX,NULLY))
+            Color(.01,.01,.01)
+            Rectangle(pos=(NULLX,0), size=(REAL_SCREEN_X-NULLX,NULLY))
+            Color(.05,.05,.05)
+            Rectangle(pos=(REAL_SCREEN_X-NULLX,0), size=(REAL_SCREEN_X,REAL_SCREEN_Y))
         
         
     def mainloop(self, dt):
         #print(dt)
-        self.fps(dt)
+        self.cc.fps(dt)
         # player always work
         self.GAME.canvas.clear()
         self.drawing.background()
@@ -87,11 +93,6 @@ class GameField(BoxLayout):
         self.drawing.world(self.player.pos, self.player.angle)
         self.drawing.mini_map(self.player)
         self.drawing.sight()
-        
-        
-        
-
-
 
 class GameApp(App):
 
