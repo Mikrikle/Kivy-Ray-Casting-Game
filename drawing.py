@@ -13,7 +13,9 @@ class Drawing:
         self.textures = {'1': Image('texture/1.png').texture,
                          '2': Image('texture/2.jpg').texture,
                          # 1200X400
-                         'S': Image('texture/sky.png').texture
+                         'S': Image('texture/sky.png').texture,
+                         # 1200X600
+                         'G':Image('texture/ground.jpg').texture
                          }
 
     def background(self, angle):
@@ -33,12 +35,12 @@ class Drawing:
             else:
                 d = r_angdeg
             
-        texture_x1 = int(400+d*2)
-        texture_x2 = int(800+d*2)
+        texture_x1 = int(400+d)
+        texture_x2 = int(800+d)
 
         # ground
         bg_color = Color(.1, .1, .1, 1)
-        rectangle = Rectangle(pos=[NULLX, NULLY], size=[WIDTH, HALF_HEIGHT])
+        rectangle = Rectangle(pos=[NULLX, NULLY], size=[WIDTH, HALF_HEIGHT], texture=self.textures['G'])
         self.sc.add(bg_color)
         self.sc.add(rectangle)
 
@@ -54,11 +56,14 @@ class Drawing:
         ray_casting(self.sc, player_pos, player_angle, self.textures)
 
     def mini_map(self, player):
-
+        # 75 50
         map_x, map_y =  player.x // MAP_SCALE, player.y // MAP_SCALE
-
         self.sc.add(Color(.8, 0, 0, 1))
-        self.sc.add(Line( points=[NULLX+map_x, NULLY+map_y, NULLX+map_x + 12 * math.cos(player.angle), NULLY+map_y + 12 * math.sin(player.angle)] ))
+
+        self.sc.add(Line( 
+                         points=[NULLX+map_x, NULLY+map_y,
+                                  NULLX+map_x + 15 * math.cos(player.angle), NULLY+map_y + 15 * math.sin(player.angle)]
+                     ))
         self.sc.add(
             Rectangle(pos=[NULLX+int(map_x)-3, NULLY+int(map_y)-3], size=[6, 6]))
 

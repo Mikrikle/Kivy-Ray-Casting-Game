@@ -73,7 +73,7 @@ class GameField(BoxLayout):
         with self.canvas.after:
             Color(.05, .05, .05)
             Rectangle(pos=(0, 0), size=(NULLX, REAL_SCREEN_Y))
-            Color(.05, .01, .15)
+            Color(.01, .01, .01)
             Rectangle(pos=(NULLX, REAL_SCREEN_Y-NULLY),
                       size=(REAL_SCREEN_X-NULLX, NULLY))
             Color(.01, .01, .01)
@@ -103,7 +103,6 @@ class GameApp(App):
         ach = AnchorLayout(anchor_x='center', anchor_y='center')
         ach.add_widget(GameField(cc))
         ach.add_widget(cc)
-
         return ach
 
 
