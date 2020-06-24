@@ -10,7 +10,7 @@ class Drawing:
     def __init__(self, sc, sc_map):
         self.sc = sc
         self.sc_map = sc_map
-        self.textures = {'1': Image('texture/1.png').texture,
+        self.textures = {'1': Image('texture/1.jpg').texture,
                          '2': Image('texture/2.jpg').texture,
                          # 1200X400
                          'S': Image('texture/sky.png').texture,
