@@ -37,7 +37,10 @@ def ray_casting(sc, player_pos, player_angle):
         # projection
         depth = depth_v if depth_v < depth_h else depth_h
         depth *= math.cos(player_angle - cur_angle)
-        proj_height = PROJ_COEFF / depth
+        try:
+            proj_height = PROJ_COEFF / depth
+        except ZeroDivisionError:
+            proj_height = 360
         c = 1 / (1 + depth * depth * 0.00002)
 
         bg_color = Color(c-0.1, c-0.1, c-0.1, 1)
