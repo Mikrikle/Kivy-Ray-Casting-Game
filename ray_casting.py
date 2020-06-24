@@ -40,8 +40,8 @@ def ray_casting(sc, player_pos, player_angle):
         proj_height = PROJ_COEFF / depth
         c = 1 / (1 + depth * depth * 0.00002)
         
-        bg_color = Color(c, c // 2, c // 3,1)
-        pos = [ray * SCALE,HALF_HEIGHT - proj_height // 2]
+        bg_color = Color(c-0.1, c-0.1 , c-0.1,1)
+        pos = [(ray * SCALE) + NULLX ,(HALF_HEIGHT - proj_height // 2) + NULLY]
         rectangle = Rectangle(pos = pos, size = [SCALE, proj_height])
         sc.add(bg_color)
         sc.add(rectangle)

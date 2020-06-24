@@ -1,16 +1,22 @@
 import math
-
+from kivy.core.window import Window
 # game settings
+
 WIDTH = 1200
 HEIGHT = 800
+
+#Window.size = [WIDTH, HEIGHT]
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
 FPS = 60
 TILE = 100
 FPS_POS = (WIDTH - 65, 5)
 
+NULLX = 360
+NULLY = 140
+
 # minimap settings
-MAP_SCALE = 5
+MAP_SCALE = 7
 MAP_TILE = TILE // MAP_SCALE
 MAP_POS = (0, HEIGHT - HEIGHT // MAP_SCALE)
 
