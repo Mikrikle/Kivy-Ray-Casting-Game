@@ -25,7 +25,7 @@ MAP_TILE = TILE // MAP_SCALE
 MAP_POS = (0, HEIGHT - HEIGHT // MAP_SCALE)
 
 # ray casting settings
-FOV = math.pi / 3
+FOV = math.pi / 4
 HALF_FOV = FOV / 2
 NUM_RAYS = 300
 MAX_DEPTH = 800

@@ -87,7 +87,7 @@ class GameField(BoxLayout):
         self.cc.fps(dt)
         # player always work
         self.GAME.canvas.clear()
-        self.drawing.background()
+        self.drawing.background(self.player.angle)
         for btn in self.cc.btns:
             if btn.state == 'down':
                 self.player.movement(btn.text)
