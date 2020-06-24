@@ -55,10 +55,10 @@ class Drawing:
 
     def mini_map(self, player):
 
-        map_x, map_y = player.x // MAP_SCALE, player.y // MAP_SCALE
+        map_x, map_y =  player.x // MAP_SCALE, player.y // MAP_SCALE
 
         self.sc.add(Color(.8, 0, 0, 1))
-        #self.sc.add(Line( points=[map_x, map_y, map_x + 12 * math.cos(player.angle), map_y + 12 * math.sin(player.angle)] ))
+        self.sc.add(Line( points=[NULLX+map_x, NULLY+map_y, NULLX+map_x + 12 * math.cos(player.angle), NULLY+map_y + 12 * math.sin(player.angle)] ))
         self.sc.add(
             Rectangle(pos=[NULLX+int(map_x)-3, NULLY+int(map_y)-3], size=[6, 6]))
 
