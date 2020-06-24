@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from worldmap import world_map
-from kivy.graphics import  Color, Canvas, Rectangle
+from kivy.graphics import Color, Canvas, Rectangle
 
 
 def mapping(a, b):
@@ -39,10 +39,10 @@ def ray_casting(sc, player_pos, player_angle):
         depth *= math.cos(player_angle - cur_angle)
         proj_height = PROJ_COEFF / depth
         c = 1 / (1 + depth * depth * 0.00002)
-        
-        bg_color = Color(c-0.1, c-0.1 , c-0.1,1)
-        pos = [(ray * SCALE) + NULLX ,(HALF_HEIGHT - proj_height // 2) + NULLY]
-        rectangle = Rectangle(pos = pos, size = [SCALE, proj_height])
+
+        bg_color = Color(c-0.1, c-0.1, c-0.1, 1)
+        pos = [(ray * SCALE) + NULLX, (HALF_HEIGHT - proj_height // 2) + NULLY]
+        rectangle = Rectangle(pos=pos, size=[SCALE, proj_height])
         sc.add(bg_color)
         sc.add(rectangle)
         cur_angle += DELTA_ANGLE
