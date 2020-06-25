@@ -5,6 +5,8 @@ from kivy.uix.widget import Widget
 from kivy.graphics import Canvas, Color, Rectangle
 from player import Player
 from drawing import Drawing
+from ray_casting import ray_casting
+from sprite_objects import *
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
@@ -68,6 +70,7 @@ class GameField(BoxLayout):
         self.event = Clock.schedule_interval(self.mainloop, 0)
         self.GAME.canvas = Canvas()
         self.player = Player()
+        self.sprites = Sprites()
         self.drawing = Drawing(self.GAME.canvas, None)
         self.add_widget(self.GAME)
         with self.canvas.after:
@@ -91,8 +94,13 @@ class GameField(BoxLayout):
         for btn in self.cc.btns:
             if btn.state == 'down':
                 self.player.movement(btn.text)
-        self.drawing.world(self.player.pos, self.player.angle)
+        walls = ray_casting(self.player, self.drawing.textures)
+        self.drawing.world(walls + [obj.object_locate(self.player, walls)
+                                    for obj in self.sprites.list_of_objects])
         self.drawing.mini_map(self.player)
+
+        # self.drawing.field(self.player)
+
         self.drawing.sight()
 
 

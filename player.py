@@ -33,3 +33,5 @@ class Player():
             self.angle -= 0.02
         if key == 'right':
             self.angle += 0.02
+            
+        self.angle %= DOUBLE_PI

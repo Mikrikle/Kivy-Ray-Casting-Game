@@ -3,7 +3,7 @@ from kivy.core.window import Window
 # game settings
 
 WIDTH = 1200
-HEIGHT = 800
+HEIGHT =  800
 
 REAL_SCREEN_X = 1920
 REAL_SCREEN_Y = 1080
@@ -17,9 +17,10 @@ TILE = 100
 
 NULLX = (REAL_SCREEN_X-WIDTH)//2
 NULLY = (REAL_SCREEN_Y-HEIGHT)//2
+H = NULLY + HEIGHT
 
 # minimap settings
-MAP_SCALE = 12
+MAP_SCALE = 10
 MAP_TILE = TILE // MAP_SCALE
 MAP_POS = (0, HEIGHT - HEIGHT // MAP_SCALE)
 
@@ -27,11 +28,16 @@ MAP_POS = (0, HEIGHT - HEIGHT // MAP_SCALE)
 FOV = math.pi / 4
 HALF_FOV = FOV / 2
 NUM_RAYS = 300
-MAX_DEPTH = 800
+MAX_DEPTH = 1000
 DELTA_ANGLE = FOV / NUM_RAYS
 DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
 PROJ_COEFF = 3 * DIST * TILE
 SCALE = WIDTH // NUM_RAYS
+
+# sprite settings
+DOUBLE_PI = math.pi * 2
+CENTER_RAY = NUM_RAYS // 2 - 1
+FAKE_RAYS = 100
 
 # texture settings (1200 x 1200)
 TEXTURE_WIDTH = 1200
@@ -39,7 +45,7 @@ TEXTURE_HEIGHT = 1200
 TEXTURE_SCALE = TEXTURE_WIDTH // TILE
 
 # player settings
-player_pos = (HALF_WIDTH, HALF_HEIGHT)
+player_pos = (HALF_WIDTH // 4, HALF_HEIGHT - 50)
 player_angle = 0
 player_speed = 2
 
