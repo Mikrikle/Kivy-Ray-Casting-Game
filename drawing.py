@@ -52,8 +52,8 @@ class Drawing:
             else:
                 d = r_angdeg
 
-        texture_x1 = int(400+d)
-        texture_x2 = int(800+d)
+        texture_x1 = int(300+d)
+        texture_x2 = int(600+d)
 
         # ground
         bg_color = Color(.1, .1, .1, 1)
@@ -71,7 +71,7 @@ class Drawing:
         self.sc.add(rectangle2)
 
     def world(self, world_objects):
-        self.sc.add(Color(.5, .5, .5, 1))
+        #self.sc.add(Color(.5, .5, .5, 1))
         for obj in sorted(world_objects, key=lambda n: n[0], reverse=True):
             if obj[0]:
                 _, object, object_pos, color = obj

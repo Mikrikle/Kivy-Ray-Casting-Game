@@ -11,7 +11,7 @@ class Sprites:
             'devil': [Image(f'sprites/devil/{i}.png').texture for i in range(8)]
         }
         self.list_of_objects = [
-            # (map pos) (pos y) (scale)
+            # (map pos  "column, row" ) (pos y "top") (scale)
             SpriteObject(self.sprite_types['barrel'],
                          True, (7.1, 2.1), 3.8, 0.4),
             SpriteObject(self.sprite_types['barrel'],
@@ -23,7 +23,7 @@ class Sprites:
                 self.sprite_types['pedestal'], 
                         True, (8.8, 5.6), 3.2, 0.5),
             SpriteObject(self.sprite_types['devil'], 
-                        False, (7, 4), 1.5, 0.7),
+                        False, (7, 4), 1.5, 1),
         ]
 
 
