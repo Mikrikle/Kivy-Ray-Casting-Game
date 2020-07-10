@@ -1,5 +1,5 @@
 from settings import *
-from worldmap import world_map
+from worldmap import world_map, WORLD_WIDTH, WORLD_HEIGHT
 from kivy.graphics import Color, Canvas, Rectangle
 
 
@@ -12,8 +12,7 @@ def ray_casting(player, textures):
     ox, oy = player.pos
     xm, ym = mapping(ox, oy)
     cur_angle = player.angle - HALF_FOV
-    texture_v = 0
-    texture_h = 0
+    texture_v, texture_h = 1, 1
     for ray in range(NUM_RAYS):
         sin_a = math.sin(cur_angle)
         cos_a = math.cos(cur_angle)
@@ -46,14 +45,12 @@ def ray_casting(player, textures):
         offset = int(offset) % TILE
         depth *= math.cos(player.angle - cur_angle)
         depth = max(depth, 0.00001)
-        try:
-            proj_height = PROJ_COEFF / depth
-        except ZeroDivisionError:
-            proj_height = 360
-            
+
+        proj_height = min(int(PROJ_COEFF / depth), PENTA_HEIGHT)
+
         c = 1 / (1 + depth * depth * 0.00001)
         bg_color = Color(c, c, c, 1)
-        
+
         wall_pos = [(ray * SCALE) + NULLX,
                     H-(HALF_HEIGHT - proj_height // 2)-TILE]
         try:

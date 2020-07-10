@@ -1,22 +1,21 @@
 from settings import *
 from ray_casting import ray_casting
 from kivy.graphics import Color, Canvas, Rectangle, Line
-from worldmap import mini_map
 from kivy.core.image import Image
-#from map import mini_map
-from worldmap import world_map
+from worldmap import world_map, mini_map
 
 
 class Drawing:
     def __init__(self, sc, sc_map):
         self.sc = sc
         self.sc_map = sc_map
-        self.textures = {'1': Image('texture/1.jpg').texture,
-                         '2': Image('texture/2.jpg').texture,
-                         # 1200X400
-                         'S': Image('texture/sky.png').texture,
+        self.textures = {1: Image('texture/wall3.png').texture,
+                         2: Image('texture/wall4.png').texture,
+                         3: Image('texture/wall5.png').texture,
+                         4: Image('texture/wall6.png').texture,
                          # 1200X600
-                         'G': Image('texture/ground.jpg').texture
+                         'S': Image('texture/sky1.png').texture,
+                         'G': Image('texture/ground.jpg').texture,
                          }
 
     def field(self, player):

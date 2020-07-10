@@ -95,7 +95,7 @@ class GameField(BoxLayout):
             if btn.state == 'down':
                 self.player.movement(btn.text)
         walls = ray_casting(self.player, self.drawing.textures)
-        self.drawing.world(walls + [obj.object_locate(self.player, walls)
+        self.drawing.world(walls + [obj.object_locate(self.player)
                                     for obj in self.sprites.list_of_objects])
         self.drawing.mini_map(self.player)
 
