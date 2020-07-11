@@ -14,17 +14,17 @@ class Player():
     def pos(self):
         return (self.x, self.y)
 
-    
-    
     def lookbehind(self, key):
+        '''rotate the camera'''
         if key == 'left':
-            self.angle -= 0.02
+            self.angle -= 0.015
         if key == 'right':
-            self.angle += 0.02
+            self.angle += 0.015
 
         self.angle %= DOUBLE_PI
     
     def movement(self, joystick):
+        '''moves the player depending on the position of the joystick'''
 
         def sign(num):
             return -1 if num < 0 else 1
@@ -32,6 +32,8 @@ class Player():
         pad = joystick.pad
         padx = pad[0]
         pady = pad[1]
+        
+        # speed equalization when moving diagonally
         if abs(padx) + abs(pady) > 1.01:
             s = (1 - (abs(padx) + abs(pady)))//2
             if padx < 0:
@@ -49,7 +51,7 @@ class Player():
 
         sin_a = math.sin(self.angle)
         cos_a = math.cos(self.angle)
-
+        # move
         if pady >= 0.1:
             self.x += player_speed * cos_a * pady
             self.y += player_speed * sin_a * pady

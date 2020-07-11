@@ -33,7 +33,7 @@ MAP_TILE = TILE // MAP_SCALE
 MAP_POS = (0, HEIGHT - HEIGHT // MAP_SCALE)
 
 # ray casting settings
-DIST_COLOR = 5 
+DIST_COLOR = 10 # standart = 5 
 FOV = math.pi / 4
 HALF_FOV = FOV / 2
 MAX_DEPTH = 1200
