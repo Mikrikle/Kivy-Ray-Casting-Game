@@ -48,8 +48,9 @@ def ray_casting(player, textures):
 
         proj_height = min(int(PROJ_COEFF / depth), PENTA_HEIGHT)
 
-        c = 1 / (1 + depth * depth * 0.00001)
+        c = 1 / (1 + depth * depth * DIST_COLOR * 0.000001)
         bg_color = Color(c, c, c, 1)
+        
 
         wall_pos = [(ray * SCALE) + NULLX,
                     H-(HALF_HEIGHT - proj_height // 2)-TILE]

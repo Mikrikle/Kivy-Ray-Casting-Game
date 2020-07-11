@@ -14,24 +14,47 @@ class Player():
     def pos(self):
         return (self.x, self.y)
 
-    def movement(self, key):
+    def movement(self, key, joystick):
+
+        def sign(num):
+            return -1 if num < 0 else 1
+
+        pad = joystick.pad
+        padx = pad[0]
+        pady = pad[1]
+        if abs(padx) + abs(pady) > 1.01:
+            s = (1 - (abs(padx) + abs(pady)))//2
+            if padx < 0:
+                padx = padx + s
+                padx = padx % sign(padx)
+            else:
+                padx = padx - s
+                padx = padx % sign(padx)
+            if pady < 0:
+                pady = pady + s
+                pady = pady % sign(pady)
+            else:
+                pady = pady - s
+                pady = pady % sign(pady)
+
         sin_a = math.sin(self.angle)
         cos_a = math.cos(self.angle)
-        if key == 'w':
-            self.x += player_speed * cos_a
-            self.y += player_speed * sin_a
-        if key == 's':
-            self.x += -player_speed * cos_a
-            self.y += -player_speed * sin_a
-        if key == 'a':
-            self.x += player_speed * sin_a
-            self.y += -player_speed * cos_a
-        if key == 'd':
-            self.x += -player_speed * sin_a
-            self.y += player_speed * cos_a
+
+        if pady >= 0.1:
+            self.x += player_speed * cos_a * pady
+            self.y += player_speed * sin_a * pady
+        if pady <= -0.1:
+            self.x += -player_speed * cos_a * abs(pady)
+            self.y += -player_speed * sin_a * abs(pady)
+        if padx <= -0.1:
+            self.x += player_speed * sin_a * abs(padx)
+            self.y += -player_speed * cos_a * abs(padx)
+        if padx >= 0.1:
+            self.x += -player_speed * sin_a * padx
+            self.y += player_speed * cos_a * padx
         if key == 'left':
             self.angle -= 0.02
         if key == 'right':
             self.angle += 0.02
-            
+
         self.angle %= DOUBLE_PI

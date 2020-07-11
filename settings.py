@@ -2,9 +2,12 @@ import math
 from kivy.core.window import Window
 # game settings
 
-WIDTH = 1200
+# game size
+NUM_RAYS = 300
+WIDTH = NUM_RAYS * 5
 HEIGHT = 800
 
+# full screen size
 REAL_SCREEN_X = 1920
 REAL_SCREEN_Y = 1080
 
@@ -14,6 +17,7 @@ HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
 FPS = 60
 TILE = 100
+
 PENTA_HEIGHT = 5 * HEIGHT
 DOUBLE_HEIGHT = 2 * HEIGHT
 
@@ -29,9 +33,9 @@ MAP_TILE = TILE // MAP_SCALE
 MAP_POS = (0, HEIGHT - HEIGHT // MAP_SCALE)
 
 # ray casting settings
+DIST_COLOR = 5 
 FOV = math.pi / 4
 HALF_FOV = FOV / 2
-NUM_RAYS = 300
 MAX_DEPTH = 1200
 DELTA_ANGLE = FOV / NUM_RAYS
 DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
@@ -53,7 +57,7 @@ TEXTURE_SCALE = TEXTURE_WIDTH // TILE
 # player settings
 player_pos = (HALF_WIDTH // 4, HALF_HEIGHT - 50)
 player_angle = 0
-player_speed = 2
+player_speed = 1.5
 
 # colors
 WHITE = (255, 255, 255)

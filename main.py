@@ -11,6 +11,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.anchorlayout import AnchorLayout
+from joystick.joystick import Joystick
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.config import Config
@@ -18,41 +19,34 @@ from settings import NULLX, NULLY, REAL_SCREEN_Y, REAL_SCREEN_X
 Window.fullscreen = 'auto'
 
 
+
+
 class Controller(FloatLayout):
-
-    btn_w = Button(text='w', size_hint=(None, None),
-                   size=(70, 70),  pos_hint={'x': .2, 'y': 1})
-    btn_s = Button(text='s', size_hint=(None, None),
-                   size=(70, 70),  pos_hint={'x': .2, 'y': 0})
-    btn_a = Button(text='a', size_hint=(None, None),
-                   size=(70, 70),  pos_hint={'x': .14, 'y': .5})
-    btn_d = Button(text='d', size_hint=(None, None),
-                   size=(70, 70),  pos_hint={'x': .26, 'y': .5})
-
-    step_grid = GridLayout(rows=3, cols=3, size_hint=(
-        None, None), pos_hint={'x': .04, 'y': .11})
-
-    for elem in (btn_w, btn_a, btn_d, btn_s):
-        step_grid.add_widget(Widget())
-        step_grid.add_widget(elem)
-    step_grid.add_widget(Widget())
-
     btn_left = Button(text='left', size_hint=(
         None, .1), pos_hint={'x': .82, 'y': .02})
     btn_right = Button(text='right', size_hint=(
         None, .1), pos_hint={'x': .92, 'y': .02})
-    btns = (btn_w, btn_s, btn_a, btn_d, btn_left, btn_right)
+    btns = (btn_left, btn_right)
+    
+    joystick = Joystick(outer_size=1,
+                        inner_size= .75,
+                        pad_size=.5,
+                        pad_line_width=.1)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.size_hint = (1, 1)
 
-        self.add_widget(self.step_grid)
+        #self.add_widget(self.step_grid)
         self.fpslbl = Label(text='0', pos_hint={
                             'x': .4, 'y': .4}, font_size=50)
         self.add_widget(self.fpslbl)
         for widget in (self.btn_left, self.btn_right):
             self.add_widget(widget)
+
+        Joystick_box = BoxLayout(padding = 25, pos_hint={'x':.015, 'y':.05}, size_hint=(None,None), size=(200,200))
+        Joystick_box.add_widget(self.joystick)
+        self.add_widget(Joystick_box)
 
     def fps(self, dt):
         fps = int(1/dt)
@@ -63,7 +57,7 @@ class GameField(BoxLayout):
 
     def __init__(self, cc, **kwargs):
         super().__init__(**kwargs)
-        self.cc = cc
+        self.controller = cc
         self.size_hint = (.8, .8)
         self.orientation = 'vertical'
         self.GAME = Widget()
@@ -87,13 +81,14 @@ class GameField(BoxLayout):
 
     def mainloop(self, dt):
         # print(dt)
-        self.cc.fps(dt)
+        self.controller.fps(dt)
         # player always work
         self.GAME.canvas.clear()
         self.drawing.background(self.player.angle)
-        for btn in self.cc.btns:
-            if btn.state == 'down':
-                self.player.movement(btn.text)
+        for btn in self.controller.btns:
+            if btn.state == 'down' or self.controller.joystick.pad != [0.0,0.0]:
+                self.player.movement(btn.text, self.controller.joystick)
+        
         walls = ray_casting(self.player, self.drawing.textures)
         self.drawing.world(walls + [obj.object_locate(self.player)
                                     for obj in self.sprites.list_of_objects])
