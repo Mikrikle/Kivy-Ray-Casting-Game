@@ -14,7 +14,17 @@ class Player():
     def pos(self):
         return (self.x, self.y)
 
-    def movement(self, key, joystick):
+    
+    
+    def lookbehind(self, key):
+        if key == 'left':
+            self.angle -= 0.02
+        if key == 'right':
+            self.angle += 0.02
+
+        self.angle %= DOUBLE_PI
+    
+    def movement(self, joystick):
 
         def sign(num):
             return -1 if num < 0 else 1
@@ -52,9 +62,4 @@ class Player():
         if padx >= 0.1:
             self.x += -player_speed * sin_a * padx
             self.y += player_speed * cos_a * padx
-        if key == 'left':
-            self.angle -= 0.02
-        if key == 'right':
-            self.angle += 0.02
 
-        self.angle %= DOUBLE_PI

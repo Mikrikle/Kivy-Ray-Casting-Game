@@ -86,8 +86,10 @@ class GameField(BoxLayout):
         self.GAME.canvas.clear()
         self.drawing.background(self.player.angle)
         for btn in self.controller.btns:
-            if btn.state == 'down' or self.controller.joystick.pad != [0.0,0.0]:
-                self.player.movement(btn.text, self.controller.joystick)
+            if btn.state == 'down':
+                self.player.lookbehind(btn.text)
+            if self.controller.joystick.pad != [0.0,0.0]:
+                self.player.movement(self.controller.joystick)
         
         walls = ray_casting(self.player, self.drawing.textures)
         self.drawing.world(walls + [obj.object_locate(self.player)
