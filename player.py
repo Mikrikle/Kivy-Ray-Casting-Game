@@ -64,4 +64,5 @@ class Player():
         if padx >= 0.1:
             self.x += -player_speed * sin_a * padx
             self.y += player_speed * cos_a * padx
-
+            
+            

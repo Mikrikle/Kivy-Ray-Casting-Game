@@ -14,7 +14,6 @@ from kivy.uix.anchorlayout import AnchorLayout
 from joystick.joystick import Joystick
 from kivy.uix.label import Label
 from kivy.core.window import Window
-from kivy.config import Config
 from settings import NULLX, NULLY, REAL_SCREEN_Y, REAL_SCREEN_X
 
 Window.fullscreen = 'auto'
@@ -93,7 +92,6 @@ class GameField(BoxLayout):
     def mainloop(self, dt):
         self.controller.fps_label_update(dt)
         self.GAME.canvas.clear()
-        self.drawing.background(self.player.angle)
         
         # processing the movement
         for btn in self.controller.btns:
@@ -103,6 +101,7 @@ class GameField(BoxLayout):
                 self.player.movement(self.controller.joystick)
         
         # draw
+        self.drawing.background(self.player.angle)
         walls = ray_casting(self.player, self.drawing.textures)
         self.drawing.world(walls + [obj.object_locate(self.player)
                                     for obj in self.sprites.list_of_objects])
